@@ -1,27 +1,32 @@
 #!/bin/bash
 
-read -p "enter the software package you want to install: " package
+#!/bin/bash
 
-if [[ $package == "nginx" ]]; 
+read -p "Enter the software package you want to install: " package
+
+if [[ $package == "nginx" ]]
 then
-	echo "installing nginx package..!"
-	sudo apt-get install nginx -y
-elif [[ $package == "apache2" ]];
+        echo "Installing nginx package..."
+        sudo apt-get install nginx -y
+
+elif [[ $package == "apache2" ]]
 then
-	echo "installing apache2 package..!"
-	sudo apt-get install apache2 -y
+        echo "Installing apache2 package..."
+        sudo apt-get install apache2 -y
+
 else
-	echo "please check the package"
+        echo "Please check the package name"
+        exit 1
 fi
 
-def check_package_status() {
+check_package_status() {
 
-if [[ $package == "running" ]];
-then
-	echo "$package is running"
-else
-	echo "$package is not running"
-fi
+    if systemctl status $package >/dev/null 2>&1
+    then
+            echo "$package is running"
+    else
+            echo "$package is not running"
+    fi
+}
 
 check_package_status
-
